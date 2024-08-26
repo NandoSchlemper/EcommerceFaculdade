@@ -17,6 +17,10 @@ func DBConnect() *sql.DB {
 		panic(err.Error())
 	}
 
+	if _, err := db.Exec(DownQuery); err != nil {
+		log.Fatal(err)
+	}
+
 	if _, err := db.Exec(TableQuery); err != nil {
 		log.Fatal(err)
 	}

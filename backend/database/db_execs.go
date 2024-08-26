@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS Products (
 id INT AUTO_INCREMENT PRIMARY KEY,
 name TEXT NOT NULL,
 description TEXT NOT NULL,
+categories TEXT NOT NULL,
 price NUMERIC(10,2),
 stock INT NOT NULL
 );
@@ -61,4 +62,14 @@ postal_code TEXT NOT NULL,
 country TEXT NOT NULL,
 FOREIGN KEY (user_id) REFERENCES Users(id)
 );
+`
+
+var DownQuery = `
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Carts;
+DROP TABLE IF EXISTS Carts_items;
+DROP TABLE IF EXISTS Products;
+DROP TABLE IF EXISTS Orders;
+DROP TABLE IF EXISTS Orders_items;
+DROP TABLE IF EXISTS Adresses;
 `

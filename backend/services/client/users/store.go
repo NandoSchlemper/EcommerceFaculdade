@@ -9,7 +9,7 @@ import (
 func UserCreate(db *sql.DB, u *client.UserPayload) error {
 	err := db.QueryRow("SELECT DISTINCT Email FROM Users WHERE Email = ?", u.Email)
 	if err != nil {
-		fmt.Errorf("Email já cadastrado! %s", err)
+		fmt.Errorf("Email já cadastrado!")
 	}
 
 	_, errinho := db.Exec("INSERT INTO Users (Name, Email, Password) VALUES (?,?,?)", u.Name, u.Email, u.Password)

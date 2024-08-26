@@ -1,7 +1,9 @@
 package users
 
 import (
+	"backend/services/client"
 	"database/sql"
+	"encoding/json"
 	"net/http"
 )
 
@@ -28,7 +30,23 @@ func GetUsers(db *sql.DB) http.HandlerFunc {
 
 func CreateUser(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Criando um user (Register famoso)"))
+		if r.Method != http.MethodPost {
+			http.Error(w, "Metodo não permitido", http.StatusMethodNotAllowed)
+			return
+		}
+
+		var u client.UserPayload
+		decoder := json.NewDecoder(r.Body)
+		if err := decoder.Decode(&u); err != nil {
+			http.Error(w, "Erro ao decodificar dados", http.StatusBadRequest)
+		}
+
+		if err := UserCreate(db, &u); err != nil {
+			http.Error(w, "Erro ao adicionar o usuário ao DB", http.StatusInternalServerError)
+		}
+
+		w.WriteHeader(http.StatusCreated)
+		w.Write([]byte("Usuário criado com sucesso!"))
 	}
 }
 

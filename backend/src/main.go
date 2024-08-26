@@ -1,8 +1,17 @@
 package main
 
-import "back/database"
+import (
+	"backend/database"
+	"backend/src/api"
+	"log"
+)
 
 func main() {
 	// DB Connection
-	database.DBConnect()
+	db := database.DBConnect()
+
+	server := api.NewAPIServer(":8080", db)
+	if err := server.Run(); err != nil {
+		log.Fatal(err)
+	}
 }

@@ -6,3 +6,9 @@ type User struct {
 	password string
 	email    string
 }
+
+type UserPayload struct {
+	username string
+	password string
+	email    string
+}

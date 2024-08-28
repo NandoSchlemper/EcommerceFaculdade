@@ -1,7 +1,0 @@
-services:
-  app:
-    build: .
-    volumes:
-      - ./db:/app/db
-    ports:
-      - "8080:8080"

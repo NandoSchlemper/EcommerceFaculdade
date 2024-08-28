@@ -1,0 +1,12 @@
+{
+  "name": "backend",
+  "packageManager": "yarn@4.2.2",
+  "dependencies": {
+    "express": "^4.19.2",
+    "sqlite3": "^5.1.7"
+  },
+  "scripts": {
+    "dev": "node cmd/main.js"
+  },
+  "type": "module"
+}

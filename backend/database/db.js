@@ -1,29 +1,78 @@
-import sqlite3 from 'sqlite3'
+import sqlite3 from 'sqlite3';
 
-export default function Connect2DB() {
-    try {
-        const db = new sqlite3.Database('../../db/ecommerce.db', (err) => {
-            if (err) {
-                console.error("Erro ao conectar-se ao DB:", err.message)
-            }
-            console.log("Conectado ao SQLite local! ;)")
-        })
+function Connect2DB() {
+    const db = new sqlite3.Database('dbecommerce.db', (err) => {
+        if (err) {
+            console.error("Erro ao conectar-se ao DB:", err.message);
+        }
+    });
 
-        db.run(`
-            CREATE TABLE IF NOT EXISTS users (
+    db.run(`
+        CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             email TEXT NOT NULL UNIQUE,
-            password TEXT NOT NULL)
-            `, (err) => {
-                if (err) {
-                    console.error("Erro ao criar a tabela Users: ", err.message)
-                }
-                console.log("Tabela users criada com sucesso")
-            })
-        
-        db.close()
-        } catch (err) {
-            console.error(err.message)
-        } 
+            password TEXT NOT NULL
+        );
+    `, (err) => {
+        if (err) {
+            console.error("Erro ao criar a tabela users:", err.message);
+            return;
+        }
+        console.log("\n(1/3) Tabela users criada com sucesso");
+    });
+
+    db.run(`
+        CREATE TABLE IF NOT EXISTS products (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            name TEXT NOT NULL,
+            description TEXT NOT NULL,
+            inventory INTEGER NOT NULL,
+            price REAL,
+            FOREIGN KEY (user_id) REFERENCES users (id)
+        );
+    `, (err) => {
+        if (err) {
+            console.error("Erro ao criar a tabela products:", err.message);
+            return;
+        }
+        console.log("(2/3) Tabela products criada com sucesso");
+    });
+
+    db.run(`
+        CREATE TABLE IF NOT EXISTS carts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            product_id INTEGER NOT NULL,
+            FOREIGN KEY (product_id) REFERENCES products (id),
+            FOREIGN KEY (user_id) REFERENCES users (id)
+        );
+    `, (err) => {
+        if (err) {
+            console.error("Erro ao criar a tabela carts:", err.message);
+            return;
+        }
+        console.log("(3/3) Tabela carts criada com sucesso");
+    });
+
+
+    db.all(`SELECT name FROM sqlite_master WHERE type='table';`, (err, rows) => {
+        if (err) {
+            console.error("Erro ao ver as tabelas: ", err.message);
+            return;
+        }
+        console.log("Tabelas do DB:\n");
+        console.table(rows);
+    });
+
+    // Fechamento do banco de dados
+    db.close((err) => {
+        if (err) {
+            console.error("Erro ao fechar a conexão com o DB:", err.message);
+        }
+        console.log("\nConexão com o DB fechada com sucesso!");
+    });
 }
+
+export default Connect2DB;

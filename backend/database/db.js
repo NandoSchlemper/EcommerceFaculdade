@@ -1,12 +1,13 @@
 import sqlite3 from 'sqlite3';
 
-function Connect2DB() {
-    const db = new sqlite3.Database('dbecommerce.db', (err) => {
-        if (err) {
-            console.error("Erro ao conectar-se ao DB:", err.message);
-        }
-    });
+const db = new sqlite3.Database('dbecommerce.db', (err) => {
+    if (err) {
+        console.error("Erro ao conectar-se ao DB:", err.message);
+    }
+});
 
+
+function Connect2DB(db) {
     db.run(`
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -75,4 +76,4 @@ function Connect2DB() {
     });
 }
 
-export default Connect2DB;
+export default {Connect2DB, db};

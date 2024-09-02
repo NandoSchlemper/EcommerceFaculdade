@@ -2,6 +2,7 @@
   "name": "backend",
   "packageManager": "yarn@4.2.2",
   "dependencies": {
+    "cookie-parser": "^1.4.6",
     "express": "^4.19.2",
     "sqlite3": "^5.1.7"
   },

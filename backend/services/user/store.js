@@ -3,7 +3,7 @@ async function CreateUser(name, email, password, db) {
         SELECT * FROM users
         WHERE email = ? 
         `, [email], (err) => {
-            if (row, err) {
+            if (err) {
                 console.log("Erro ao procurar email do banco:\n", err.message)
             }
         })
@@ -24,4 +24,17 @@ async function CreateUser(name, email, password, db) {
     }
 }
 
-export default {CreateUser}
+
+async function GetAllUsers(db) {
+    await db.get(`
+        SELECT * FROM users;
+        `, (row, err) => {
+            if (err) {
+                console.error(err.message)
+            } else {
+                console.log(row)
+            }
+        })
+}
+
+export {CreateUser, GetAllUsers}

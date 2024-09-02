@@ -11,6 +11,10 @@ async function ServerConnection() {
         console.log("Servidor rodando!\nlocalhost:" + port)
     })
 
+    app.get("/", (req, res) => {
+        res.send("Welcome 2 our application!")
+    })
+
     app.use('/user', UserRouter)
 }
 

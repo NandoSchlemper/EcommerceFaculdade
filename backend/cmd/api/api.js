@@ -1,6 +1,7 @@
 import express from 'express';
+import { UserRouter } from '../../services/user/routes.js';
 
-function ServerConnection() {
+async function ServerConnection() {
     const app = express()
     const port = "8080"
     
@@ -9,6 +10,8 @@ function ServerConnection() {
     app.listen(port, () => {
         console.log("Servidor rodando!\nlocalhost:" + port)
     })
+
+    app.use('/user', UserRouter)
 }
 
 export  {ServerConnection}

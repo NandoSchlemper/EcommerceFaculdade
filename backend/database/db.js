@@ -1,12 +1,12 @@
 import sqlite3 from 'sqlite3';
 
-function Connect2DB() {
-    const db = new sqlite3.Database('dbecommerce.db', (err) => {
-        if (err) {
-            console.error("Erro ao conectar-se ao DB:", err.message);
-        }
-    });
+const db = new sqlite3.Database('dbecommerce.db', (err) => {
+    if (err) {
+        console.error("Erro ao conectar-se ao DB:", err.message);
+    }
+});
 
+export default async function Connect2DB(db) {
     db.run(`
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -19,7 +19,7 @@ function Connect2DB() {
             console.error("Erro ao criar a tabela users:", err.message);
             return;
         }
-        console.log("\n(1/3) Tabela users criada com sucesso");
+        console.log("\nTabela users criada com sucesso");
     });
 
     db.run(`
@@ -37,7 +37,7 @@ function Connect2DB() {
             console.error("Erro ao criar a tabela products:", err.message);
             return;
         }
-        console.log("(2/3) Tabela products criada com sucesso");
+        console.log("Tabela products criada com sucesso");
     });
 
     db.run(`
@@ -53,7 +53,7 @@ function Connect2DB() {
             console.error("Erro ao criar a tabela carts:", err.message);
             return;
         }
-        console.log("(3/3) Tabela carts criada com sucesso");
+        console.log("Tabela carts criada com sucesso");
     });
 
 
@@ -67,12 +67,13 @@ function Connect2DB() {
     });
 
     // Fechamento do banco de dados
-    db.close((err) => {
-        if (err) {
-            console.error("Erro ao fechar a conexão com o DB:", err.message);
-        }
-        console.log("\nConexão com o DB fechada com sucesso!");
-    });
+    //db.close((err) => {
+    //    if (err) {
+    //        console.error("Erro ao fechar a conexão com o DB:", err.message);
+    //    }
+    //    console.log("\nConexão com o DB fechada com sucesso!");
+    //});
 }
 
-export default Connect2DB;
+
+export { Connect2DB, db }

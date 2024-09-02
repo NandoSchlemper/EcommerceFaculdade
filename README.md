@@ -17,14 +17,11 @@ required:
 
 ```bash
 clone this project
-
-  $ git clone <project>
+- $ git clone <project>
 
 install dependencies
-
-  $ pnpm i
+- $ pnpm i
 
 run server
-
-  $ pnpm dev
+- $ pnpm dev
 ```

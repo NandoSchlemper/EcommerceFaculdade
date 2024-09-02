@@ -1,8 +1,4 @@
-import GetDB from '../../database/db.js'
-
-//let db = GetDB()
-
-async function CreateUser(name, email, password) {
+async function CreateUser(name, email, password, db) {
     await db.get(`
         SELECT * FROM users
         WHERE email = ? 

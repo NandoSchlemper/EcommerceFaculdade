@@ -6,12 +6,7 @@ const db = new sqlite3.Database('dbecommerce.db', (err) => {
     }
 });
 
-<<<<<<< HEAD
 export default async function Connect2DB(db) {
-=======
-
-function Connect2DB(db) {
->>>>>>> 2aaa1f3c2be92082f529daeb584ca320b3ed3a6f
     db.run(`
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -80,9 +75,4 @@ function Connect2DB(db) {
     //});
 }
 
-<<<<<<< HEAD
-
 export { Connect2DB, db }
-=======
-export default {Connect2DB, db};
->>>>>>> 2aaa1f3c2be92082f529daeb584ca320b3ed3a6f

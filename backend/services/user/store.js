@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
 const userModel = mongoose.model('user', userSchema)
 
 async function createUser(name, email, password) {
-    const user = new userModel({
+    let user = new userModel({
         name: name,
         email: email,
         password: password

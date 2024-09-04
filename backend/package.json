@@ -1,0 +1,15 @@
+{
+  "name": "backend",
+  "packageManager": "yarn@4.2.2",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2",
+    "mongodb": "^6.8.0",
+    "mongoose": "^8.6.1",
+    "sqlite3": "^5.1.7"
+  },
+  "scripts": {
+    "dev": "node --env-file=.env cmd/main.js"
+  },
+  "type": "module"
+}

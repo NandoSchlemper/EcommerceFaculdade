@@ -42,7 +42,7 @@ async function deleteUser(id) {
             console.log("... Usuário encontrado no banco")
         }
 
-        await userModel.remove({_id: id})
+        await userModel.deleteOne({_id: id})
         console.log("Usuário deletado com sucesso!")
     } catch (err) {
         console.error(err.message)

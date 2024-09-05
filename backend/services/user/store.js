@@ -29,7 +29,7 @@ async function createUser(name, email, password) {
         })
 
         await user.save()
-        console.log("Usuário criado com sucesso!\n", user)
+        console.log("Usuário criado com sucesso!!\n", user)
     } catch (err) {
         console.error(err.message)
     }

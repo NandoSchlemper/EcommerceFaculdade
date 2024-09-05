@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {createUser} from "../user/store.js"
+import UserModule from "../user/store.js"
 
 const UserRouter = Router()
 
@@ -10,16 +10,20 @@ UserRouter.get('/getUsers', async (req, res) => {
 })
 
 // Get User By ID
-UserRouter.get('/getUsers/:userId', (req, res) => {
+UserRouter.post('/getUsers/:userId', async (req, res) => {
     res.send(req.params)
+    try {
+        await UserModule.deleteUser(req.params.userId)
+    } catch (err) {
+        console.error(err.message)
+    }
 })
 
 // Post User (create)
 UserRouter.post('/createUser', async (req, res) => {
-    const {username, email, password} = req.body
+    const {name, email, password} = req.body
     try {
-        await createUser(username, email, password)
-        console.log("Usuário criado com sucesso!")
+        await UserModule.createUser(name, email, password)
     } catch(err) {
         console.error("Erro ao vincular usuário com o DB\n", err.message)
     }

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+    import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -44,7 +44,6 @@ async function deleteUser(id) {
         }
 
         await userModel.deleteOne({_id: id})
-        console.log("Usuário deletado com sucesso!")
     } catch (err) {
         console.error(err.message)
     }
@@ -55,11 +54,12 @@ async function getAllUsers() {
     try {
         const pesquisa = userModel.find().select('name email').lean()
         const docs = await pesquisa
-        console.table(docs)
-    } catch (err) {s
+        return docs
+    } catch (err) {
         console.error(err.message)
     }
 }
+
 
 const UserModule = {
     createUser,

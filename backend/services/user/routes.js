@@ -9,8 +9,8 @@ UserRouter.get('/getUsers', async (req, res) => {
     res.send("hai")
 })
 
-// Get User By ID
-UserRouter.post('/getUsers/:userId', async (req, res) => {
+// Delete User By ID
+UserRouter.delete('/deleteUser/:userId', async (req, res) => {
     res.send(req.params)
     try {
         await UserModule.deleteUser(req.params.userId)

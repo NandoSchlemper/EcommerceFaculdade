@@ -35,6 +35,7 @@ async function createUser(name, email, password) {
     }
 }
 
+
 async function deleteUser(id) {
     try {
         const user = await userModel.findById(id)
@@ -49,9 +50,21 @@ async function deleteUser(id) {
     }
 }
 
+
+async function getAllUsers() {
+    try {
+        const pesquisa = userModel.find().select('name email').lean()
+        const docs = await pesquisa
+        console.table(docs)
+    } catch (err) {s
+        console.error(err.message)
+    }
+}
+
 const UserModule = {
     createUser,
-    deleteUser
+    deleteUser,
+    getAllUsers
 }
 
 export default UserModule

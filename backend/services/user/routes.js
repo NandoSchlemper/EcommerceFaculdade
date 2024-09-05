@@ -6,7 +6,8 @@ const UserRouter = Router()
 
 // Get a list of Users
 UserRouter.get('/getUsers', async (req, res) => {
-    res.send("hai")
+    if (req.method != "GET") {res.status(405).send('Metodo invalido!')}
+    await UserModule.getAllUsers()
 })
 
 // Delete User By ID

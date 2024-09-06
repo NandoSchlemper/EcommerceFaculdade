@@ -2,7 +2,7 @@
 
 const userSchema = new mongoose.Schema({
     name: {
-        type: String,
+        type: Object,
         required: true
     },
 
@@ -69,12 +69,19 @@ async function getAllUsers() {
     }
 }
 
+async function updateUser(id, params) {
+    const filter = {_id: id}
+    const update = params
+    const doc = userModel.findOneAndUpdate(filter, update, {new: true})
+    return doc    
+}
 
 const UserModule = {
     createUser,
     deleteUser,
     getAllUsers,
-    getUserById
+    getUserById,
+    updateUser
 }
 
 export default UserModule

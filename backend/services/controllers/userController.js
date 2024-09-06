@@ -3,7 +3,8 @@ import UserModule from "../models/userSchemas.js"
 export async function getUsers(req, res) {
     if (req.method != "GET") {res.status(405).send('Metodo invalido!')}
     const allUsers = await UserModule.getAllUsers()
-    if (allUsers) {res.status(200).send(allUsers)} {res.status(404).send('not found')}
+    res.send(allUsers)
+    if (!allUsers) {res.status(404).send('not found')}
 }
 
 export async function getUsersById(req, res) {
@@ -35,3 +36,13 @@ export async function createUser(req, res) {
 }
 
 
+export async function updateUser(req, res) {
+    const {name, email, password} = req.body
+    const params = {name, email, password}
+    const id = req.params.userId
+    const doc = await UserModule.updateUser(id, params)
+    console.log(params)
+    console.log(params)
+    console.log(doc)
+    res.status(200).send(doc)
+}

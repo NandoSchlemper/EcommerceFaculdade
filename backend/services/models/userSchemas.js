@@ -49,6 +49,15 @@ async function deleteUser(id) {
     }
 }
 
+async function getUserById(id) {
+    try {
+        const user = await userModel.findById({_id: id}).select('name email').lean()
+        if (!user) {console.log("Erro ao encontrar usuário no DB")} {return user}
+
+    } catch (err) {
+        console.error(err.message)
+    }
+}
 
 async function getAllUsers() {
     try {
@@ -64,7 +73,8 @@ async function getAllUsers() {
 const UserModule = {
     createUser,
     deleteUser,
-    getAllUsers
+    getAllUsers,
+    getUserById
 }
 
 export default UserModule

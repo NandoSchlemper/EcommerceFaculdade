@@ -2,7 +2,15 @@ import UserModule from "../models/userSchemas.js"
 
 export async function getUsers(req, res) {
     if (req.method != "GET") {res.status(405).send('Metodo invalido!')}
-    UserModule.getAllUsers().then(res.status(200).send('Lista de usuários:\n'))
+    const allUsers = await UserModule.getAllUsers()
+    if (allUsers) {res.status(200).send(allUsers)} {res.status(404).send('not found')}
+}
+
+export async function getUsersById(req, res) {
+    if (req.method != "GET") {res.status(405)}
+    const user = await UserModule.getUserById(req.params.userId)
+    res.send(user)
+    if (!user) {res.status(404).send('Usuário não encontrado')}    
 }
 
 export async function deleteUser(req, res) {
@@ -25,4 +33,5 @@ export async function createUser(req, res) {
         res.status(404).send("Não foi possivel criar o usuário")
     }
 }
-  
+
+

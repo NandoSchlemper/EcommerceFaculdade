@@ -1,11 +1,10 @@
-import Home from '../pages/Home'
+// import Home from "../pages/Home";
+import Login from "../pages/Login";
 
-import '../styles/App.css'
+import "../styles/App.css";
 
 function App() {
-  return (
-      <Home/>
-  )
+  return <Login />;
 }
 
-export default App
+export default App;

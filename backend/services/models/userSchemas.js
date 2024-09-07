@@ -1,8 +1,8 @@
-import mongoose from 'mongoose'
+    import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
     name: {
-        type: String,
+        type: Object,
         required: true
     },
 
@@ -35,6 +35,7 @@ async function createUser(name, email, password) {
     }
 }
 
+
 async function deleteUser(id) {
     try {
         const user = await userModel.findById(id)
@@ -42,16 +43,45 @@ async function deleteUser(id) {
             console.log("... Usuário encontrado no banco")
         }
 
-        await userModel.remove({_id: id})
-        console.log("Usuário deletado com sucesso!")
+        await userModel.deleteOne({_id: id})
     } catch (err) {
         console.error(err.message)
     }
 }
 
+async function getUserById(id) {
+    try {
+        const user = await userModel.findById({_id: id}).select('name email').lean()
+        if (!user) {console.log("Erro ao encontrar usuário no DB")} {return user}
+
+    } catch (err) {
+        console.error(err.message)
+    }
+}
+
+async function getAllUsers() {
+    try {
+        const pesquisa = userModel.find().select('name email').lean()
+        const docs = await pesquisa
+        return docs
+    } catch (err) {
+        console.error(err.message)
+    }
+}
+
+async function updateUser(id, params) {
+    const filter = {_id: id}
+    const update = params
+    const doc = userModel.findOneAndUpdate(filter, update, {new: true})
+    return doc    
+}
+
 const UserModule = {
     createUser,
-    deleteUser
+    deleteUser,
+    getAllUsers,
+    getUserById,
+    updateUser
 }
 
 export default UserModule

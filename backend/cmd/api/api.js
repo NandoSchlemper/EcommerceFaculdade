@@ -1,5 +1,5 @@
 import express from 'express';
-import { UserRouter } from '../../services/user/routes.js';
+import { UserRouter } from '../../services/routers/userRoutes.js';
 
 async function ServerConnection() {
     const app = express()

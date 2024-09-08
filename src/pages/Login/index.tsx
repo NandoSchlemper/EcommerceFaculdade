@@ -3,7 +3,7 @@ function Login() {
     <section className="h-screen bg-gradient-to-b from-[#A6B1E1] to-[#424874]">
       <div className="items-center justify-center flex h-full">
         <div className="bg-[#F4EEFF] h-[550px] w-[480px] p-4 rounded-lg shadow-lg">
-          <div className="flex-col mb-4">
+          <div className="flex-col mb-8">
             <h2 className="text-center text-[#424874] text-4xl p-6 font-bold">Login</h2>
           </div>
 
@@ -13,7 +13,7 @@ function Login() {
                 <input
                   type="text"
                   placeholder="email"
-                  className="bg-[#F4EEFF] w-80 p-4 border-b-2 border-solid border-[#424874] text-[#424874] text-lg"
+                  className="bg-[#F4EEFF] w-80 p-4 border-b-2 border-solid border-b-[#424874] text-[#424874] text-lg focus:rounded-lg focus:border-red-500 hover:bg-[#ece6f7] hover:rounded-lg"
                 />
               </div>
 
@@ -21,7 +21,7 @@ function Login() {
                 <input
                   placeholder="password"
                   type="password"
-                  className="bg-[#F4EEFF] w-80 p-4 border-b-2 border-solid border-[#424874] text-[#424874] text-lg"
+                  className="bg-[#F4EEFF] w-80 p-4 border-b-2 border-solid border-b-[#424874] text-[#424874] text-lg focus:rounded-lg focus:border-red-500 hover:bg-[#ece6f7] hover:rounded-lg"
                 />
               </div>
 

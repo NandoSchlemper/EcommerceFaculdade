@@ -10,6 +10,26 @@
 - [React-Router](https://reactrouter.com/en/main/start/tutorial) >= 6.26.1
 - [Tailwindcss + Vite](https://tailwindcss.com/docs/guides/vite) >= 3.4.10
 
+## Structure
+```bash
+<root project>
+|- src
+|  |- @types
+|  |- app
+|  |- components
+|  |- hooks(optional)
+|  |- pages
+|  |- services
+|  |  |- Home
+|  |  |- Product
+|  |  |- Login
+|  |  |- Cart
+|  |  |- Register
+|  |- styles(tailwind)
+|  |- utils
+|- <environment>
+```
+
 ## Install
 required:
 - `Node.js` installed

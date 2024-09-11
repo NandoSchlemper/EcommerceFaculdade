@@ -30,8 +30,9 @@
 |- <environment>
 ```
 
-## Install
+## Run local
 required:
+
 - `Node.js` installed
 - `pnpm` installed
 

@@ -1,4 +1,4 @@
-function Login() {
+export default function Login() {
   return (
     <section className="h-screen bg-gradient-to-b from-[#A6B1E1] to-[#424874]">
       <div className="items-center justify-center flex h-full">
@@ -49,4 +49,3 @@ function Login() {
     </section>
   );
 }
-export default Login;

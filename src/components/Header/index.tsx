@@ -1,8 +1,8 @@
 import Logo from "../../assets/apple-touch-icon.jpg";
-import SearchBar from "./components/SearchBar/index";
-import NavBar from "./components/NavBar";
+import { SearchBar } from "./components/SearchBar/index";
+import { NavBar } from "./components/NavBar";
 
-function Header() {
+export default function Header() {
   return (
     <header className="bg-[#424874] w-screen h-28 flex items-center justify-between px-8  ">
       <div className="flex items-center space-x-8">
@@ -17,5 +17,3 @@ function Header() {
     </header>
   );
 }
-
-export default Header;

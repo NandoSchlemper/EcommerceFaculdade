@@ -1,7 +1,7 @@
 import Header from "../../components/Header";
 import Cellphone from "../../assets/cellphone.webp";
 
-function Product() {
+export default function Product() {
   return (
     <>
       <Header />
@@ -74,4 +74,3 @@ function Product() {
     </>
   );
 }
-export default Product;

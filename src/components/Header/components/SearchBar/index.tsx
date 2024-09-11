@@ -1,6 +1,6 @@
 import SearchIcon from "../../../../assets/search.png";
 
-function SearchBar() {
+export function SearchBar() {
   return (
     <div className="flex flex-row ml-4">
       <form
@@ -23,4 +23,3 @@ function SearchBar() {
     </div>
   );
 }
-export default SearchBar;

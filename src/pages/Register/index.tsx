@@ -1,4 +1,4 @@
-function Register() {
+export default function Register() {
   return (
     <section className="h-screen bg-gradient-to-b from-[#A6B1E1] to-[#424874]">
       <div className="items-center justify-center flex h-full">
@@ -56,5 +56,3 @@ function Register() {
     </section>
   );
 }
-
-export default Register;

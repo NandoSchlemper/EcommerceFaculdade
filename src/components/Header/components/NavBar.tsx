@@ -1,6 +1,6 @@
 import CartIcon from "../../../assets/cart.png";
 
-function NavBar() {
+export function NavBar() {
   return (
     <nav className="flex items-center space-x-6">
       <ul className="flex items-center space-x-4">
@@ -33,5 +33,3 @@ function NavBar() {
     </nav>
   );
 }
-
-export default NavBar;

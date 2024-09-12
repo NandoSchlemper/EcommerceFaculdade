@@ -15,7 +15,7 @@ export async function registerUser(req, res) {
         const token = jwt.sign({userId: newUser._id}, secret_key, {expiresIn: '1h'})
         
         res.cookie('token', token)
-        res.status(201).json({message: "Registrado e Token Enviado"})
+        res.status(201).json({message: "Registrado e Token Enviado p/ cookie"})
     } catch (err) {
         res.status(500).json({message: 'Erro ao registrar o usuário!'})
     }
@@ -42,3 +42,4 @@ export async function loginUser(req, res) {
         res.status(500).json({ message: 'Erro ao logar!' });
     }
 }
+

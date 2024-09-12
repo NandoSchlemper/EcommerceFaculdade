@@ -41,8 +41,5 @@ export async function updateUser(req, res) {
     const params = {name, email, password}
     const id = req.params.userId
     const doc = await UserModule.updateUser(id, params)
-    console.log(params)
-    console.log(params)
-    console.log(doc)
     res.status(200).send(doc)
 }

@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import UserModule from '../models/userSchemas.js'
+import cookieConfig from '../../utils/cookiesExpress.js'
 
 const secret_key = process.env.JWT_KEY
 
@@ -14,7 +15,7 @@ export async function registerUser(req, res) {
         if (!newUser) {console.log("Usuário não encontrado")}
         const token = jwt.sign({userId: newUser._id}, secret_key, {expiresIn: '1h'})
         
-        res.cookie('token', token)
+        res.cookie('token', token, cookieConfig)
         res.status(201).json({message: "Registrado e Token Enviado p/ cookie"})
     } catch (err) {
         res.status(500).json({message: 'Erro ao registrar o usuário!'})
@@ -32,7 +33,7 @@ export async function loginUser(req, res) {
             const token = jwt.sign({ userId: LogedUser._id }, secret_key, { expiresIn: '1h' });
 
             console.log('Resultado positivo!');
-            res.cookie('token', token);
+            res.cookie('token', token, cookieConfig);
             res.status(200).json({ token });
         } else {
             res.status(401).json({ message: 'Invalid email or password.' });

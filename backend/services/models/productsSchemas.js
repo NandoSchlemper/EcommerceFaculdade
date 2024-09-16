@@ -26,4 +26,5 @@ const productSchema = mongoose.Schema({
     } // Perguntar p pablo se compensa mais fazer isso, ou uma tabela separada de Log (Seller - Product)
 })
 
-ProductModel = mongoose.model('Product', productSchema)
+const productModel = mongoose.model('Product', productSchema)
+

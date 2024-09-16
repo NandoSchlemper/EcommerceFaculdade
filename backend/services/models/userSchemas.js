@@ -42,10 +42,26 @@ const sellerSchema = new mongoose.Schema({
 const sellerModel = mongoose.model('seller', sellerSchema)
 const userModel = mongoose.model('user', userSchema)
 
-async function createUser(name, email, password) {
+function verifyType(type) {
+    const tipagem = () => {
+        if (type==="user") {
+            return userModel
+        } if (type==="seller") {
+            return sellerModel
+        }
+            return null
+    } 
+
+    return tipagem()
+}
+
+async function createUser(type, name, email, password) {
     try {
         const UserPassEncrypted = await bcrypt.hash(password, saltRound)
-        const user = new userModel({
+
+        const model = verifyType(type)
+
+        const user = new model({
             name: name,
             email: email,
             password: UserPassEncrypted
@@ -58,22 +74,24 @@ async function createUser(name, email, password) {
     }
 }
 
-async function deleteUser(id) {
+async function deleteUser(type, id) {
     try {
-        const user = await userModel.findById(id)
+        const model = verifyType(type)
+        const user = await model.findById(id)
         if (user) {
             console.log("... Usuário encontrado no banco")
         }
 
-        await userModel.deleteOne({_id: id})
+        await model.deleteOne({_id: id})
     } catch (err) {
         console.error(err.message)
     }
 }
 
-async function getUserById(id) {
+async function getUserById(type, id) {
     try {
-        const user = await userModel.findById({_id: id}).select('name email').lean()
+        const model = verifyType(type)
+        const user = await model.findById({_id: id}).select('name email').lean()
         if (!user) {console.log("Erro ao encontrar usuário no DB")} return user
 
     } catch (err) {
@@ -81,9 +99,10 @@ async function getUserById(id) {
     }
 }
 
-async function getUserByEmail(email) {
+async function getUserByEmail(type, email) {
     try {
-        const user = await userModel.find({email: email}).exec()
+        const model = verifyType(type)
+        const user = await model.find({email: email}).exec()
         if (!user) {
             return null
         // biome-ignore lint/style/noUselessElse: <explanation>
@@ -95,9 +114,10 @@ async function getUserByEmail(email) {
     }
 }
 
-async function getAllUsers() {
+async function getAllUsers(type) {
     try {
-        const pesquisa = userModel.find().select('name email').lean()
+        const model = verifyType(type)
+        const pesquisa = model.find().select('name email').lean()
         const docs = await pesquisa
         return docs
     } catch (err) {
@@ -105,16 +125,18 @@ async function getAllUsers() {
     }
 }
 
-async function updateUser(id, params) {
+async function updateUser(type, id, params) {
+    const model = verifyType(type)
     const filter = {_id: id}
     const update = params
-    const doc = userModel.findOneAndUpdate(filter, update, {new: true})
+    const doc = model.findOneAndUpdate(filter, update, {new: true})
     return doc    
 }
 
-async function loginParameters(email, password) {
+async function loginParameters(type, email, password) {
     try {
-        const user = await userModel.findOne({ email: email }).exec();
+        const model = verifyType(type)
+        const user = await model.findOne({ email: email }).exec();
         if (!user) {
             console.error('User not found');
             return false; 

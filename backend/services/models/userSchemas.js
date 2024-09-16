@@ -5,7 +5,7 @@ const saltRound = 10;
 
 const userSchema = new mongoose.Schema({
     name: {
-        type: Object,
+        type: String,
         required: true
     },
 
@@ -21,12 +21,31 @@ const userSchema = new mongoose.Schema({
     }
 })
 
+const sellerSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+
+    email: {
+        type: String,
+        unique: true,
+        required: true
+    },
+
+    password: {
+        type: String,
+        required: true
+    }
+}) // Ver se eu coloco alguma relação aqui para com os produtos
+
+const sellerModel = mongoose.model('seller', sellerSchema)
 const userModel = mongoose.model('user', userSchema)
 
 async function createUser(name, email, password) {
     try {
         const UserPassEncrypted = await bcrypt.hash(password, saltRound)
-        let user = new userModel({
+        const user = new userModel({
             name: name,
             email: email,
             password: UserPassEncrypted
@@ -55,7 +74,7 @@ async function deleteUser(id) {
 async function getUserById(id) {
     try {
         const user = await userModel.findById({_id: id}).select('name email').lean()
-        if (!user) {console.log("Erro ao encontrar usuário no DB")} {return user}
+        if (!user) {console.log("Erro ao encontrar usuário no DB")} return user
 
     } catch (err) {
         console.error(err.message)
@@ -67,6 +86,7 @@ async function getUserByEmail(email) {
         const user = await userModel.find({email: email}).exec()
         if (!user) {
             return null
+        // biome-ignore lint/style/noUselessElse: <explanation>
         } else {
             return user 
         }

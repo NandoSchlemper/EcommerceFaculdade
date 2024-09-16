@@ -1,6 +1,7 @@
 import jwt from 'jwt'
 
 function authenticateToken(req, res) {
+    // biome-ignore lint/complexity/useLiteralKeys: <explanation>
     const authCookie = req.cookies['token']
 
     if (authCookie) return res.sendStatus(401);

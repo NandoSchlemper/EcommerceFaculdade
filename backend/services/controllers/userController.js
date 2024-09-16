@@ -1,14 +1,14 @@
 import UserModule from "../models/userSchemas.js"
 
 export async function getUsers(req, res) {
-    if (req.method != "GET") {res.status(405).send('Metodo invalido!')}
+    if (req.method !== "GET") {res.status(405).send('Metodo invalido!')}
     const allUsers = await UserModule.getAllUsers()
     res.send(allUsers)
     if (!allUsers) {res.status(404).send('not found')}
 }
 
 export async function getUsersById(req, res) {
-    if (req.method != "GET") {res.status(405)}
+    if (req.method !== "GET") {res.status(405)}
     const user = await UserModule.getUserById(req.params.userId)
     res.send(user)
     if (!user) {res.status(404).send('Usuário não encontrado')}    

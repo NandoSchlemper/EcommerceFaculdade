@@ -1,48 +1,14 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
+import schemaModels from '../../database/schemas'
+
 
 const saltRound = 10;
 
-const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
+const sellerModel = schemaModels.sellerModel
+const userModel = schemaModels.userModel
 
-    email: {
-        type: String,
-        unique: true,
-        required: true
-    },
-
-    password: {
-        type: String,
-        required: true
-    }
-})
-
-const sellerSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-
-    email: {
-        type: String,
-        unique: true,
-        required: true
-    },
-
-    password: {
-        type: String,
-        required: true
-    }
-}) // Ver se eu coloco alguma relação aqui para com os produtos
-
-const sellerModel = mongoose.model('seller', sellerSchema)
-const userModel = mongoose.model('user', userSchema)
-
-function verifyType(type) {
+export function verifyType(type: string) {
     const tipagem = () => {
         if (type==="user") {
             return userModel
@@ -55,7 +21,8 @@ function verifyType(type) {
     return tipagem()
 }
 
-async function createUser(type, name, email, password) {
+
+async function createUser(type: string, name: string, email: string, password: string) {
     try {
         const UserPassEncrypted = await bcrypt.hash(password, saltRound)
 
@@ -74,7 +41,7 @@ async function createUser(type, name, email, password) {
     }
 }
 
-async function deleteUser(type, id) {
+async function deleteUser(type: string, id: string) {
     try {
         const model = verifyType(type)
         const user = await model.findById(id)
@@ -88,7 +55,7 @@ async function deleteUser(type, id) {
     }
 }
 
-async function getUserById(type, id) {
+async function getUserById(type: string, id: string) {
     try {
         const model = verifyType(type)
         const user = await model.findById({_id: id}).select('name email').lean()
@@ -99,7 +66,7 @@ async function getUserById(type, id) {
     }
 }
 
-async function getUserByEmail(type, email) {
+async function getUserByEmail(type: string, email: string) {
     try {
         const model = verifyType(type)
         const user = await model.find({email: email}).exec()
@@ -114,7 +81,7 @@ async function getUserByEmail(type, email) {
     }
 }
 
-async function getAllUsers(type) {
+async function getAllUsers(type: string) {
     try {
         const model = verifyType(type)
         const pesquisa = model.find().select('name email').lean()
@@ -125,7 +92,7 @@ async function getAllUsers(type) {
     }
 }
 
-async function updateUser(type, id, params) {
+async function updateUser(type: string, id: string, params: object) {
     const model = verifyType(type)
     const filter = {_id: id}
     const update = params
@@ -133,7 +100,7 @@ async function updateUser(type, id, params) {
     return doc    
 }
 
-async function loginParameters(type, email, password) {
+async function loginParameters(type: string, email: string, password: string) {
     try {
         const model = verifyType(type)
         const user = await model.findOne({ email: email }).exec();

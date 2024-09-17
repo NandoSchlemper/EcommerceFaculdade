@@ -1,4 +1,5 @@
-import express from 'express';
+// biome-ignore lint/style/useImportType: <explanation>
+import express, {Request, Response} from 'express';
 import { UserRouter } from '../../services/routers/userRoutes.js';
 import { AuthRouter } from '../../services/routers/authRoutes.js';
 
@@ -9,10 +10,10 @@ async function ServerConnection() {
     app.use(express.json())
 
     app.listen(port, () => {
-        console.log("Servidor rodando!\nlocalhost:" + port)
+        console.log(`Servidor rodando!\nlocalhost:${port}`)
     })
 
-    app.get("/", (req, res) => {
+    app.get("/", (req: Request, res: Response) => {
         res.send("Welcome 2 our application!")
     })
 

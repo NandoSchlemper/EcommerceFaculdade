@@ -5,4 +5,4 @@ async function main() {
     await ServerConnection()
     await Connect2DB().catch((err) => console.error(err.message))
 }
-await main()
+main()

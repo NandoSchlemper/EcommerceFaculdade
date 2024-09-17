@@ -15,7 +15,7 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
     
     verify(authCookie, process.env.JWT_KEY, (err: Error | null, user: UserPayload | undefined) => {
         if (err) return res.sendStatus(403);
-        req.user = user;
+        req.user = user as UserPayload;
         next();
     })
 }

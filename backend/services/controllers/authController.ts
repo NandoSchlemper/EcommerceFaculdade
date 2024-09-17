@@ -4,10 +4,7 @@ import cookieConfig from '../../utils/cookiesExpress.js'
 // biome-ignore lint/style/useImportType: <explanation>
 import { Request, Response } from 'express'
 
-
 const secret_key = process.env.JWT_KEY
-
-
 
 export async function registerUser(req: Request, res: Response) {
     try {

@@ -2,6 +2,7 @@
 import express, {Request, Response} from 'express';
 import { UserRouter } from '../../services/routers/userRoutes.js';
 import { AuthRouter } from '../../services/routers/authRoutes.js';
+import { ProductRouter } from '../../services/routers/productRoutes.js';
 
 async function ServerConnection() {
     const app = express()
@@ -19,6 +20,7 @@ async function ServerConnection() {
 
     app.use('/user', UserRouter)
     app.use('/auth', AuthRouter)
+    app.use('/product', ProductRouter)
 }
 
 export  {ServerConnection}

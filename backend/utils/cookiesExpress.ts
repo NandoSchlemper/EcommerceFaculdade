@@ -4,4 +4,4 @@ const cookieConfig = {
     signed: true
 }
 
-export default cookieConfig
+export default cookieConfig 

@@ -14,7 +14,7 @@
     "zod": "^3.23.8"
   },
   "scripts": {
-    "dev": "node --env-file=.env --watch cmd/main.js"
+    "dev": "npx tsx --env-file=.env cmd/main.ts"
   },
   "type": "module",
   "devDependencies": {

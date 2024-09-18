@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 import schemaModels from '../../database/schemas'
-
+import { handleDevError } from 'utils/handleError';
 
 const saltRound = 10;
 
@@ -15,14 +15,20 @@ export function verifyType(type: string) {
         } if (type==="seller") {
             return sellerModel
         }
-            return null
+            return userModel
     } 
 
     return tipagem()
 }
 
+export interface UserTypes {
+    type: "user" | "seller";
+    name: string;
+    email: string;
+    password: string;
+}
 
-async function createUser(type: string, name: string, email: string, password: string) {
+async function createUser({type, name, email, password}: UserTypes) {
     try {
         const UserPassEncrypted = await bcrypt.hash(password, saltRound)
 
@@ -37,7 +43,7 @@ async function createUser(type: string, name: string, email: string, password: s
         await user.save()
         console.log("Usuário criado com sucesso!!\n", user)
     } catch (err) {
-        console.error('deu problema:', err.message)
+        handleDevError(err)
     }
 }
 
@@ -51,7 +57,7 @@ async function deleteUser(type: string, id: string) {
 
         await model.deleteOne({_id: id})
     } catch (err) {
-        console.error(err.message)
+        handleDevError(err)
     }
 }
 
@@ -62,7 +68,7 @@ async function getUserById(type: string, id: string) {
         if (!user) {console.log("Erro ao encontrar usuário no DB")} return user
 
     } catch (err) {
-        console.error(err.message)
+        handleDevError(err)
     }
 }
 
@@ -77,7 +83,7 @@ async function getUserByEmail(type: string, email: string) {
             return user 
         }
     } catch(err) {
-        console.error(err.message)
+        handleDevError(err)
     }
 }
 
@@ -88,7 +94,7 @@ async function getAllUsers(type: string) {
         const docs = await pesquisa
         return docs
     } catch (err) {
-        console.error(err.message)
+        handleDevError(err)
     }
 }
 
@@ -114,8 +120,8 @@ async function loginParameters(type: string, email: string, password: string) {
         
         return isMatch; 
     } catch (err) {
-        console.error('Error during login:', err.message);
-        return false; 
+        handleDevError(err)
+        return false
     }
 }
 

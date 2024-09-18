@@ -1,4 +1,5 @@
 import schemaModels from '../../database/schemas'
+import { handleDevError } from 'utils/handleError'
 
 async function GetProductById(id: string) {
     try {
@@ -6,7 +7,7 @@ async function GetProductById(id: string) {
         if (!pesquisa) console.log("ID não encontrado!")
         return pesquisa
     } catch (err) {
-        console.error(err.message)
+        handleDevError(err)
     }
 } 
 
@@ -16,7 +17,7 @@ async function GetAllProducts() {
         if (!pesquisa) console.log("Nenhum produto encontrado")
         return pesquisa
     } catch (err) {
-        console.error(err.message)
+        handleDevError(err)
     }
 }
 
@@ -34,7 +35,7 @@ async function RegisterProduct(name: string, description: string, value: number,
         console.log("Usuário cadastrado com sucesso!")
         console.log(res)
     } catch (err) {
-        console.error(err.message)
+        handleDevError(err)
     }
 }
 

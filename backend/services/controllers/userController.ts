@@ -1,6 +1,7 @@
 // biome-ignore lint/style/useImportType: <explanation>
 import { Request, Response } from "express"
 import UserModule from "../models/userMethods.js"
+import { handleWebError } from "utils/handleError.js"
 
 export async function getUsers(req: Request, res: Response) {
     if (req.method !== "GET") {res.status(405).send('Metodo invalido!')}
@@ -23,20 +24,18 @@ export async function deleteUser(req: Request, res: Response) {
         const type = req.body
         await UserModule.deleteUser(type, req.params.userId)
         res.status(200).send("Usuário deletado com sucesso")
-    } catch (err) {
-        console.error(err.message)
-        res.status(404).send("Não foi possivel deletar o usuário...")
+    } catch(err: unknown){
+        handleWebError(err, res)
     }
 }
 
 export async function createUser(req: Request, res: Response) {
-    const {type, name, email, password} = req.body
     try {
-        await UserModule.createUser(type, name, email, password)
+        const {type, name, email, password} = req.body
+        await UserModule.createUser({type, name, email, password})
         res.status(200).send("Usuário criado com sucesso!")
     } catch (err) {
-        console.error(err.message)
-        res.status(404).send("Não foi possivel criar o usuário")
+        handleWebError(err, res)
     }
 }
 

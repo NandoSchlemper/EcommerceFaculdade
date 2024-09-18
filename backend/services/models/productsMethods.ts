@@ -20,7 +20,27 @@ async function GetAllProducts() {
     }
 }
 
+async function RegisterProduct(name: string, description: string, value: number, shipment: number, sellerId: string) {
+    try {
+        const newUser = new schemaModels.productModel({
+            name: name,
+            description: description,
+            value: value,
+            shipment: shipment,
+            sellerId: sellerId
+        })
+
+        const res = await newUser.save()
+        console.log("Usuário cadastrado com sucesso!")
+        console.log(res)
+    } catch (err) {
+        console.error(err.message)
+    }
+}
+
 export const ProductModule = {
     GetProductById,
-    GetAllProducts
+    GetAllProducts,
+    RegisterProduct
 }
+

@@ -7,7 +7,7 @@ const ProductRouter = Router()
 ProductRouter.use(cookieParser())
 ProductRouter.use(authenticateToken)
 
-ProductRouter.get('/getAllProducts', getProducts)
+ProductRouter.get('/getProducts/:id', getProducts)
 ProductRouter.post('/deleteProductById', deleteProductById)
 ProductRouter.post('/createProduct', createProduct)
 ProductRouter.post('/updateProduct/:id', updateProduct)

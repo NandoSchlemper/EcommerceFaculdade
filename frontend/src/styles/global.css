@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@layer base {
+  html, body {
+    @apply overflow-x-hidden;
+    @apply h-screen;
+    @apply w-screen;
+  }
+}

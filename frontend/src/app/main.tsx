@@ -1,22 +1,19 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import * as React from 'react'
+import * as ReactDOM from 'react-dom/client'
+import { BrowserRouter as Router } from 'react-router-dom'
+import '@radix-ui/themes/styles.css'
 
-// import App from "./index.tsx";
-import Root from "./routes/index.tsx";
+import { App } from './index'
 
-import "../styles/index.css";
-import "../styles/global.css";
+import '../styles/global.css'
+import { Theme } from '@radix-ui/themes'
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-  },
-]);
-
-ReactDOM.createRoot(document.getElementById("root")!).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,
-);
+    <Router>
+      <Theme>
+        <App />
+      </Theme>
+    </Router>
+  </React.StrictMode>
+)

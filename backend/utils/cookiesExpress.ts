@@ -1,7 +1,7 @@
 const cookieConfig = {
-    httpOnly: true,
-    maxAge: 1000000,
-    signed: true
+    maxAge: 10000,
+    signed: true,
+    httpOnly: true
 }
 
 export default cookieConfig 

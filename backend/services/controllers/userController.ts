@@ -4,19 +4,25 @@ import UserModule from "../models/userMethods.js"
 import { handleWebError } from "utils/handleError.js"
 
 export async function getUsers(req: Request, res: Response) {
-    if (req.method !== "GET") {res.status(405).send('Metodo invalido!')}
+    if (req.method !== "POST") {res.status(405).send('Metodo invalido!')}
     const type = req.body
     const allUsers = await UserModule.getAllUsers(type)
     res.send(allUsers)
     if (!allUsers) {res.status(404).send('not found')}
 }
 
+
 export async function getUsersById(req: Request, res: Response) {
-    if (req.method !== "GET") {res.status(405)}
-    const type = req.body
-    const user = await UserModule.getUserById(type, req.params.userId)
-    res.send(user)
-    if (!user) {res.status(404).send('Usuário não encontrado')}    
+    try {
+        if (req.method !== "POST") {res.status(405)}
+        const type = req.body
+        const id = req.params.userId
+        const user = await UserModule.getUserById(type, id)
+        if (!user) {console.warn("Usuário não encontrado")}    
+        res.send(user)
+    } catch (err) {
+        handleWebError(err, res)
+    }
 }
 
 export async function deleteUser(req: Request, res: Response) {
@@ -24,7 +30,7 @@ export async function deleteUser(req: Request, res: Response) {
         const type = req.body
         await UserModule.deleteUser(type, req.params.userId)
         res.status(200).send("Usuário deletado com sucesso")
-    } catch(err: unknown){
+    } catch(err){
         handleWebError(err, res)
     }
 }

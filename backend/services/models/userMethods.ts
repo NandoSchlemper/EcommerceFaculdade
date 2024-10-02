@@ -1,12 +1,19 @@
-import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 import schemaModels from '../../database/schemas'
 import { handleDevError } from 'utils/handleError';
+import type { UserDocument } from 'database/models';
 
 const saltRound = 10;
 
 const sellerModel = schemaModels.sellerModel
 const userModel = schemaModels.userModel
+
+export interface User {
+    _id?: string;
+    name: string;
+    email: string;
+    password: string;
+}
 
 export function verifyType(type: string) {
     const tipagem = () => {
@@ -51,8 +58,8 @@ async function deleteUser(type: string, id: string) {
     try {
         const model = verifyType(type)
         const user = await model.findById(id)
-        if (user) {
-            console.log("... Usuário encontrado no banco")
+        if (!user) {
+            console.warn("Usuário não encontrado no banco!")
         }
 
         await model.deleteOne({_id: id})
@@ -61,29 +68,25 @@ async function deleteUser(type: string, id: string) {
     }
 }
 
-async function getUserById(type: string, id: string) {
+async function getUserById(type: string, id: string): Promise< UserDocument | null > {
     try {
         const model = verifyType(type)
-        const user = await model.findById({_id: id}).select('name email').lean()
+        const user = model.findById(id)
         if (!user) {console.log("Erro ao encontrar usuário no DB")} return user
-
     } catch (err) {
         handleDevError(err)
+        return null
     }
 }
 
-async function getUserByEmail(type: string, email: string) {
+async function getUserByEmail(type: string, email: string): Promise<UserDocument | null> {
     try {
         const model = verifyType(type)
-        const user = await model.find({email: email}).exec()
-        if (!user) {
-            return null
-        // biome-ignore lint/style/noUselessElse: <explanation>
-        } else {
-            return user 
-        }
+        const user = await model.findOne({ email: email }).exec();        
+        return user as UserDocument | null
     } catch(err) {
         handleDevError(err)
+        return null
     }
 }
 
